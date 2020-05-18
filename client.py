@@ -6,19 +6,45 @@ import os
 # State: "menu", "start", "game"
 state = "menu"
 
-width = 1280
-height = 720
+width = 854
+height = 480
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Fligo")
 pygame.font.init()
 font = pygame.font.Font(os.getcwd() + '\\Resources\\SnesItalic-vmAPZ.ttf', 128)
 font2 = pygame.font.Font(os.getcwd() + '\\Resources\\Alice-Regular.ttf', 128)
 
+red = (255,0,0)
+bright_red = (150,0,0)
+
+white = (255,255,255)
+
 def redrawWindow(win,player, player2):
     win.fill((255,255,255))
     player.draw(win)
     player2.draw(win)
     pygame.display.update()
+
+def button(msg, x, y, wid, hei, ac, ic, action=None):
+    mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+
+    if x + wid > mouse[0] > x and y + hei > mouse[1] > y:
+        pygame.draw.rect(win, ac,(x,y,wid,hei))
+        if click[0] == 1 and action != None:
+            if action == "play":
+                game()
+            elif action == "quit":
+                pygame.quit()
+                quit()
+    else:
+        pygame.draw.rect(win, ic,(x,y,wid,hei))
+
+    font3 = pygame.font.Font(os.getcwd() + '\\Resources\\SnesItalic-vmAPZ.ttf', 30)
+    smallText = font3.render(msg, True, white)
+    textRect2 = smallText.get_rect()
+    textRect2.center = (x + (wid/2), y + (hei/2))
+    win.blit(smallText, textRect2)
 
 def main_menu():
     menu = True
@@ -33,19 +59,21 @@ def main_menu():
         
         # main menu
         win.fill((255,255,255))
-        mouse = pygame.mouse.get_pos()
+        
 
         # Button dan Text
         # Title
-        text = font.render('4. FLIGO', True, (255,0,0)) 
+        text = font.render('4. FLIGO', True, red) 
         textRect = text.get_rect()
 
         textRect.center = (width // 2, (height // 2) - 100)
         win.blit(text, textRect)
 
         # Button
-        pygame.draw.rect(win, (255,0,0),((width // 2)-100,(height // 2),200,50),3)
-        pygame.draw.rect(win, (255,0,0),((width // 2)-100,(height // 2)+75,200,50),3)
+        button("Start", ((width // 2)-100), (height // 2), 200, 50, bright_red, red, "play")
+        button("Quit", ((width // 2)-100), ((height // 2)+75), 200, 50, bright_red, red, "quit")
+        # pygame.draw.rect(win, red,((width // 2)-100,(height // 2),200,50),3)
+        # pygame.draw.rect(win, red,((width // 2)-100,(height // 2)+75,200,50),3)
 
         pygame.display.update()
 
