@@ -34,8 +34,10 @@ def button(msg, x, y, wid, hei, ac, ic, action=None):
     if x + wid > mouse[0] > x and y + hei > mouse[1] > y:
         pygame.draw.rect(win, ac,(x,y,wid,hei))
         if click[0] == 1 and action != None:
-            if action == "play":
-                game()
+            if action == "create":
+                create_menu()
+            elif action == "join":
+                join_menu()
             elif action == "quit":
                 pygame.quit()
                 quit()
@@ -88,14 +90,31 @@ def main_menu():
         win.blit(text, textRect)
 
         # Button
-        button("Start", ((width // 2)-100), (height // 2), 200, 50, bright_red, red, "play")
-        button("Quit", ((width // 2)-100), ((height // 2)+75), 200, 50, bright_red, red, "quit")
+        button("Create Game", ((width // 2)-100), (height // 2), 200, 50, bright_red, red, "create")
+        button("Join Game", ((width // 2)-100), ((height // 2)+75), 200, 50, bright_red, red, "create")
+        button("Quit", ((width // 2)-100), ((height // 2)+150), 200, 50, bright_red, red, "quit")
         # pygame.draw.rect(win, red,((width // 2)-100,(height // 2),200,50),3)
         # pygame.draw.rect(win, red,((width // 2)-100,(height // 2)+75,200,50),3)
 
         pygame.display.update()
 
-def start_menu():
+def create_menu():
+    start = True
+    # clock = pygame.time.Clock()
+
+    while start:
+        clock.tick(60)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                menu = False
+                pygame.quit()
+        
+        # main menu
+        win.fill((0,255,255))
+        # Button dan Text
+        pygame.display.update()
+
+def join_menu():
     start = True
     # clock = pygame.time.Clock()
 
