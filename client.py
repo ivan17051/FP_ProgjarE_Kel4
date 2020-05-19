@@ -11,8 +11,10 @@ height = 720
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Fligo")
 pygame.font.init()
-font = pygame.font.Font(os.getcwd() + '\\Resources\\SnesItalic-vmAPZ.ttf', 128)
-font2 = pygame.font.Font(os.getcwd() + '\\Resources\\Alice-Regular.ttf', 128)
+font = pygame.font.Font(os.getcwd() + '\\Resources\\fonts\\SnesItalic-vmAPZ.ttf', 128)
+font2 = pygame.font.Font(os.getcwd() + '\\Resources\\fonts\\Alice-Regular.ttf', 128)
+
+bg = pygame.image.load(os.getcwd() + '\\Resources\\img\\bg.png').convert()
 
 def redrawWindow(win,player, player2):
     win.fill((255,255,255))
@@ -23,9 +25,11 @@ def redrawWindow(win,player, player2):
 def main_menu():
     menu = True
     # clock = pygame.time.Clock()
-
+    bgX = 0
+    bgX2 = bg.get_width()
     while menu:
         clock.tick(60)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 menu = False
@@ -34,6 +38,20 @@ def main_menu():
         # main menu
         win.fill((255,255,255))
         mouse = pygame.mouse.get_pos()
+
+        #scolling background
+        bgX -= 0.5  # Move both background images back
+        bgX2 -= 0.5
+
+        if bgX < bg.get_width() * -1:  # If our bg is at the -width then reset its position
+            bgX = bg.get_width()
+
+        if bgX2 < bg.get_width() * -1:
+            bgX2 = bg.get_width()
+
+
+        win.blit(bg, (bgX, 0))  # draws our first bg image
+        win.blit(bg, (bgX2, 0))  # draws the seconf bg image
 
         # Button dan Text
         # Title
