@@ -211,6 +211,9 @@ def join_menu():
 
 def game():
     game = True
+    bgX = 0
+    bgX2 = bg.get_width()
+
     n = Network()
     p = n.getP()
     p2 = n.send(p)
@@ -231,12 +234,28 @@ def game():
             if event.type == pygame.QUIT:
                 game = False
                 pygame.quit()
+
+        
         # if(doRectsOverlap(p.rect,p2.rect)):
             # p.move()
         # if p_rect.colliderect(p2.rect):
         p.move()
 
         win.fill((255,255,255))
+        #scolling background
+        bgX -= 0.5  # Move both background images back
+        bgX2 -= 0.5
+
+        if bgX < bg.get_width() * -1:  # If our bg is at the -width then reset its position
+            bgX = bg.get_width()
+
+        if bgX2 < bg.get_width() * -1:
+            bgX2 = bg.get_width()
+
+
+        win.blit(bg, (bgX, 0))  # draws our first bg image
+        win.blit(bg, (bgX2, 0))  # draws the seconf bg image
+        
         win.blit(p_img, p.rect)
         win.blit(p2_img, p2.rect)
         pygame.display.update()
