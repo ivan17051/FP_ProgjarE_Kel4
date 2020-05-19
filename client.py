@@ -14,6 +14,8 @@ height = 720
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Fligo")
 pygame.font.init()
+
+baseFont = pygame.font.Font(None, 35)
 font = pygame.font.Font(os.getcwd() + '\\Resources\\fonts\\SnesItalic-vmAPZ.ttf', 128)
 font2 = pygame.font.Font(os.getcwd() + '\\Resources\\fonts\\Alice-Regular.ttf', 128)
 
@@ -22,6 +24,7 @@ bg = pygame.image.load(os.getcwd() + '\\Resources\\img\\bg.png').convert()
 red = (255,0,0)
 bright_red = (150,0,0)
 white = (255,255,255)
+black = (0,0,0)
 
 def doRectsOverlap(rect1, rect2):
     for a, b in [(rect1, rect2), (rect2, rect1)]:
@@ -161,6 +164,7 @@ def create_menu():
 def join_menu():
     start = True
     # clock = pygame.time.Clock()
+    ip_server = ''
     bgX = 0
     bgX2 = bg.get_width()
     try:
@@ -170,6 +174,11 @@ def join_menu():
                 if event.type == pygame.QUIT:
                     menu = False
                     pygame.quit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_BACKSPACE:
+                        ip_server = ip_server[:-1]
+                    else:
+                        ip_server += event.unicode
             
             # main menu
             win.fill((0,255,255))
@@ -189,7 +198,12 @@ def join_menu():
             win.blit(bg, (bgX2, 0))  # draws the seconf bg image
 
             # Button dan Text
-            button("Back", ((width // 2)-100), (height // 2), 200, 50, bright_red, red, "main")
+            input_rect = pygame.Rect(((width // 2)-100), (height // 2)-50, 200, 50)
+            pygame.draw.rect(win, white, input_rect)
+
+            text_surface = baseFont.render(ip_server, True, black)
+            win.blit(text_surface, (input_rect.x + 5, input_rect.y + 15))
+            button("Back", ((width // 2)-100), (height // 2)+25, 200, 50, bright_red, red, "main")
 
             pygame.display.update()
     except Done:
@@ -238,6 +252,7 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
                 pygame.quit()
+
         if state == "main":
             main_menu()
         if state == "create":
