@@ -2,6 +2,7 @@ import pygame
 from network import Network
 from player import Player
 import os
+import socket
 
 class Done(Exception): pass
 
@@ -202,7 +203,7 @@ def game():
 
 def main():
     run = True
-
+    print(socket.gethostbyname(socket.gethostname()))
     while run:  
         # clock.tick(60)
 
@@ -218,7 +219,7 @@ def main():
             join_menu()
         if state == "game":
             game()
-        print(state)
+        # print(state)
 
 clock = pygame.time.Clock()
 main()
