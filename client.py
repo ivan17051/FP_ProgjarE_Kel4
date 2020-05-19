@@ -6,8 +6,8 @@ import os
 # State: "menu", "start", "game"
 state = "menu"
 
-width = 854
-height = 480
+width = 1280
+height = 720
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Fligo")
 pygame.font.init()
@@ -42,7 +42,7 @@ def button(msg, x, y, wid, hei, ac, ic, action=None):
     else:
         pygame.draw.rect(win, ic,(x,y,wid,hei))
 
-    font3 = pygame.font.Font(os.getcwd() + '\\Resources\\SnesItalic-vmAPZ.ttf', 30)
+    font3 = pygame.font.Font(os.getcwd() + '\\Resources\\fonts\\SnesItalic-vmAPZ.ttf', 30)
     smallText = font3.render(msg, True, white)
     textRect2 = smallText.get_rect()
     textRect2.center = (x + (wid/2), y + (hei/2))
