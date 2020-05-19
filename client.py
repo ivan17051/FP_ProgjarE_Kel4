@@ -7,7 +7,7 @@ import socket
 class Done(Exception): pass
 
 # State: "menu", "start", "game"
-state = "main"
+state = "game"
 
 width = 1280
 height = 720
@@ -23,10 +23,23 @@ red = (255,0,0)
 bright_red = (150,0,0)
 white = (255,255,255)
 
+def doRectsOverlap(rect1, rect2):
+    for a, b in [(rect1, rect2), (rect2, rect1)]:
+        # Check if a's corners are inside b
+        if ((isPointInsideRect(a.left, a.top, b)) or (isPointInsideRect(a.left, a.bottom, b)) or (isPointInsideRect(a.right, a.top, b)) or (isPointInsideRect(a.right, a.bottom, b))):
+            return True
+    return False
+
+def isPointInsideRect(x, y, rect):
+    if (x > rect.left) and (x < rect.right) and (y > rect.top) and (y < rect.bottom):
+        return True
+    else:
+        return False
+
 def redrawWindow(win,player, player2):
     win.fill((255,255,255))
-    player.draw(win)
-    player2.draw(win)
+    # player.draw(win)
+    # player2.draw(win)
     pygame.display.update()
 
 def button(msg, x, y, wid, hei, ac, ic, action=None):
@@ -186,19 +199,33 @@ def game():
     game = True
     n = Network()
     p = n.getP()
+    p2 = n.send(p)
+
+    p_img = pygame.image.load(p.image)
+    p2_img = pygame.image.load(p2.image)
+
+
+    # print(p.rect)
+    # p_rect = p.rect
+    # print(p.rect)
     # clock = pygame.time.Clock()
 
     while game:  
         clock.tick(60)
-        p2 = n.send(p)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game = False
                 pygame.quit()
-
+        # if(doRectsOverlap(p.rect,p2.rect)):
+            # p.move()
+        # if p_rect.colliderect(p2.rect):
         p.move()
-        redrawWindow(win, p, p2)
+
+        win.fill((255,255,255))
+        win.blit(p_img, p.rect)
+        win.blit(p2_img, p2.rect)
+        pygame.display.update()
 
 
 def main():

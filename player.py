@@ -1,17 +1,21 @@
 import pygame
 
 class Player():
-    def __init__(self, x, y, width, height, color):
+    def __init__(self, x, y, width, height,image):
         self.x = x
         self.y = y
         self.width = width
         self.height = height
-        self.color = color
         self.rect = (x,y,width,height)
         self.vel = 3
+        self.image = image
 
     def draw(self, win):
-        pygame.draw.rect(win, self.color, self.rect)
+        win.blit(self.image, self.rect)
+        # pygame.draw.rect(win, self.color, self.rect)
+
+    def getRect(self):
+        return self.rect
 
     def move(self):
         keys = pygame.key.get_pressed()
