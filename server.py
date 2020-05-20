@@ -4,7 +4,7 @@ from player import Player
 import pickle
 import os
 
-server = "192.168.1.6"
+server = "192.168.1.7"
 port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -21,6 +21,9 @@ print("Waiting for a connection, Server Started")
 # p2 = pygame.image.load(os.getcwd() + '\\Resources\\img\\blue.png').convert()
 
 players = [Player(0,0,100,85,os.getcwd() + '\\Resources\\img\\blue.png'), Player(100,100, 100,85, os.getcwd() + '\\Resources\\img\\green.png')]
+
+def generateObstacle():
+    print("obstacle")
 
 def threaded_client(conn, player):
     conn.send(pickle.dumps(players[player]))

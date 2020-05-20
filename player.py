@@ -9,6 +9,7 @@ class Player():
         self.rect = (x,y,width,height)
         self.vel = 3
         self.image = image
+        # self.players
 
     def draw(self, win):
         win.blit(self.image, self.rect)

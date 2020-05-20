@@ -6,8 +6,8 @@ import socket
 
 class Done(Exception): pass
 
-# State: "menu", "start", "game"
-state = "game"
+# State: "main", "start", "game"
+state = "main"
 
 width = 1280
 height = 720
@@ -209,6 +209,48 @@ def join_menu():
     except Done:
         pass
 
+def movement(p,rect,enemy):
+    keys = pygame.key.get_pressed()
+    # up,bottom,left,right
+    way = [True,True,True,True]
+
+    collision = [False] * 9
+    collision[0] = enemy.collidepoint(rect.topleft)
+    collision[1] = enemy.collidepoint(rect.topright)
+    collision[2] = enemy.collidepoint(rect.bottomleft)
+    collision[3] = enemy.collidepoint(rect.bottomright)
+
+    collision[4] = enemy.collidepoint(rect.midleft)
+    collision[5] = enemy.collidepoint(rect.midright)
+    collision[6] = enemy.collidepoint(rect.midtop)
+    collision[7] = enemy.collidepoint(rect.midbottom)
+
+    collision[8] = rect.collidepoint(rect.center)
+
+    if collision[0] or collision[2] or collision[4]:
+        print ("left")
+        way[2] = False
+    if collision[1] or collision[3] or collision[5]:
+        print ("right")
+        way[3] = False
+    if collision[0] or collision[1] or collision[6]:
+        print ("top")
+        way[0] = False
+    if collision[2] or collision[3] or collision[7]:
+        print ("bottom")
+        way[1] = False
+
+    if keys[pygame.K_LEFT] and way[2]:
+        p.x -= p.vel
+    if keys[pygame.K_RIGHT] and way[2]:
+        p.x += p.vel
+    if keys[pygame.K_UP] and way[2]:
+        p.y -= p.vel
+    if keys[pygame.K_DOWN] and way[2]:
+        p.y += p.vel
+
+
+
 def game():
     game = True
     bgX = 0
@@ -220,6 +262,9 @@ def game():
 
     p_img = pygame.image.load(p.image)
     p2_img = pygame.image.load(p2.image)
+
+    p.players = [pygame.Rect(p2.rect)]
+    # players = [pygame.Rect(p2.rect)]
 
 
     # print(p.rect)
@@ -239,6 +284,10 @@ def game():
         # if(doRectsOverlap(p.rect,p2.rect)):
             # p.move()
         # if p_rect.colliderect(p2.rect):
+        # if pygame.Rect(p.rect).collidelist(p.players) >= 0:
+        #     print("ga")
+
+        # movement(p,pygame.Rect(p.rect), pygame.Rect(p2.rect))
         p.move()
 
         win.fill((255,255,255))
@@ -255,7 +304,7 @@ def game():
 
         win.blit(bg, (bgX, 0))  # draws our first bg image
         win.blit(bg, (bgX2, 0))  # draws the seconf bg image
-        
+
         win.blit(p_img, p.rect)
         win.blit(p2_img, p2.rect)
         pygame.display.update()
