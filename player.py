@@ -1,7 +1,8 @@
 import pygame
 
 class Player():
-    def __init__(self, x, y, width, height,image):
+    def __init__(self, name,x, y, width, height,image):
+        self.name = name
         self.x = x
         self.y = y
         self.width = width
@@ -9,6 +10,7 @@ class Player():
         self.rect = (x,y,width,height)
         self.vel = 3
         self.image = image
+        self.ready = False
         # self.players
 
     def draw(self, win):
