@@ -4,7 +4,7 @@ from player import Player
 import pickle
 import os
 
-server = "192.168.1.7"
+server = "192.168.1.18"
 port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -20,7 +20,7 @@ print("Waiting for a connection, Server Started")
 # p1 = pygame.image.load(os.getcwd() + '\\Resources\\img\\green.png').convert()
 # p2 = pygame.image.load(os.getcwd() + '\\Resources\\img\\blue.png').convert()
 
-players = [Player(0,0,100,85,os.getcwd() + '\\Resources\\img\\blue.png'), Player(100,100, 100,85, os.getcwd() + '\\Resources\\img\\green.png')]
+players = [Player("Player 1",0,0,100,85,os.getcwd() + '\\Resources\\img\\blue.png'), Player("Player 2",100,100, 100,85, os.getcwd() + '\\Resources\\img\\green.png')]
 
 def generateObstacle():
     print("obstacle")
