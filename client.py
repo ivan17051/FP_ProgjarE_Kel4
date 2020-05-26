@@ -18,6 +18,7 @@ pygame.font.init()
 baseFont = pygame.font.Font(None, 35)
 font = pygame.font.Font(os.getcwd() + '\\Resources\\fonts\\SnesItalic-vmAPZ.ttf', 128)
 font2 = pygame.font.Font(os.getcwd() + '\\Resources\\fonts\\Alice-Regular.ttf', 128)
+FONT = pygame.font.Font(None, 50)
 
 bg = pygame.image.load(os.getcwd() + '\\Resources\\img\\bg.png').convert()
 
@@ -25,6 +26,47 @@ red = (255,0,0)
 bright_red = (150,0,0)
 white = (255,255,255)
 black = (0,0,0)
+
+class InputBox:
+    def __init__(self, x, y, w, h, text=''):
+        self.rect = pygame.Rect(x, y, w, h)
+        self.color = red
+        self.text = text
+        self.txt_surface = FONT.render(text, True, self.color)
+        self.active = False
+
+    def handle_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            # If the user clicked on the input_box rect.
+            if self.rect.collidepoint(event.pos):
+                # Toggle the active variable.
+                self.active = not self.active
+            else:
+                self.active = False
+            # Change the current color of the input box.
+            self.color = bright_red if self.active else red
+        if event.type == pygame.KEYDOWN:
+            if self.active:
+                if event.key == pygame.K_RETURN:
+                    print(self.text)
+                    self.text = ''
+                if event.key == pygame.K_BACKSPACE:
+                    self.text = self.text[:-1]
+                else:
+                    self.text += event.unicode
+                # Re-render the text.
+                self.txt_surface = FONT.render(self.text, True, self.color)
+
+    def update(self):
+        # Resize the box if the text is too long.
+        width = max(300, self.txt_surface.get_width()+10)
+        self.rect.w = width
+
+    def draw(self, screen):
+        # Blit the text.
+        screen.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
+        # Blit the rect.
+        pygame.draw.rect(screen, self.color, self.rect, 2)
 
 def doRectsOverlap(rect1, rect2):
     for a, b in [(rect1, rect2), (rect2, rect1)]:
@@ -167,6 +209,9 @@ def join_menu():
     ip_server = ''
     bgX = 0
     bgX2 = bg.get_width()
+
+    input_box1 = InputBox(((width // 2)-150), (height // 2)-50, 300, 50)
+    input_boxes = [input_box1]
     try:
         while start:
             clock.tick(60)
@@ -174,13 +219,18 @@ def join_menu():
                 if event.type == pygame.QUIT:
                     menu = False
                     pygame.quit()
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_BACKSPACE:
-                        ip_server = ip_server[:-1]
-                    else:
-                        ip_server += event.unicode
+                # if event.type == pygame.KEYDOWN:
+                #     if event.key == pygame.K_BACKSPACE:
+                #         ip_server = ip_server[:-1]
+                #     else:
+                #         ip_server += event.unicode
+                for box in input_boxes:
+                    box.handle_event(event)
             
-            # main menu
+            # main 
+            for box in input_boxes:
+                box.update()
+
             win.fill((0,255,255))
 
             #scolling background
@@ -198,12 +248,18 @@ def join_menu():
             win.blit(bg, (bgX2, 0))  # draws the seconf bg image
 
             # Button dan Text
-            input_rect = pygame.Rect(((width // 2)-100), (height // 2)-50, 200, 50)
-            pygame.draw.rect(win, white, input_rect)
 
-            text_surface = baseFont.render(ip_server, True, black)
-            win.blit(text_surface, (input_rect.x + 5, input_rect.y + 15))
-            button("Back", ((width // 2)-100), (height // 2)+25, 200, 50, bright_red, red, "main")
+            # screen.fill((30, 30, 30))
+            for box in input_boxes:
+                box.draw(win)
+
+            # input_rect = pygame.Rect(((width // 2)-100), (height // 2)-50, 200, 50)
+            # pygame.draw.rect(win, white, input_rect)
+
+            # text_surface = baseFont.render(ip_server, True, black)
+            # win.blit(text_surface, (input_rect.x + 5, input_rect.y + 15))
+            button("Join", ((width // 2)-100), (height // 2)+25, 200, 50, bright_red, red, "")
+            button("Back", ((width // 2)-100), (height // 2)+100, 200, 50, bright_red, red, "main")
 
             pygame.display.update()
     except Done:
@@ -323,13 +379,17 @@ def main():
 
         if state == "main":
             main_menu()
-        if state == "create":
+            pass
+        elif state == "create":
             create_menu()
-        if state == "join":
+            pass
+        elif state == "join":
             join_menu()
-        if state == "game":
+            pass
+        elif state == "game":
             game()
-        # print(state)
+            pass
+        print(state)
 
 clock = pygame.time.Clock()
 main()
