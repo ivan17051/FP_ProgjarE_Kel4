@@ -98,13 +98,13 @@ def button(msg, x, y, wid, hei, ac, ic, action=None):
             if action == "main":
                 state = "main"
                 raise Done
-            elif action == "create":
+            if action == "create":
                 state = "create"
                 raise Done
-            elif action == "join":
+            if action == "join":
                 state = "join"
                 raise Done
-            elif action == "quit":
+            if action == "quit":
                 pygame.quit()
                 quit()
     else:
@@ -121,8 +121,9 @@ def main_menu():
     # clock = pygame.time.Clock()
     bgX = 0
     bgX2 = bg.get_width()
-    try:
-        while menu:
+    
+    while menu:
+        try:
             clock.tick(60)
 
             for event in pygame.event.get():
@@ -158,22 +159,23 @@ def main_menu():
 
             # Button
             button("Join Game", ((width // 2)-100), (height // 2), 200, 50, bright_red, red, "join")
-            button("Create Game", ((width // 2)-100), ((height // 2)+75), 200, 50, bright_red, red, "create")
-            button("Quit", ((width // 2)-100), ((height // 2)+150), 200, 50, bright_red, red, "quit")
+            # button("Create Game", ((width // 2)-100), ((height // 2)+75), 200, 50, bright_red, red, "create")
+            button("Quit", ((width // 2)-100), ((height // 2)+75), 200, 50, bright_red, red, "quit")
             # pygame.draw.rect(win, red,((width // 2)-100,(height // 2),200,50),3)
             # pygame.draw.rect(win, red,((width // 2)-100,(height // 2)+75,200,50),3)
 
             pygame.display.update()
-    except Done:
-        pass
+        except Done:
+            break
 
 def create_menu():
     start = True
     # clock = pygame.time.Clock()
     bgX = 0
     bgX2 = bg.get_width()
-    try:
-        while start:
+    
+    while start:
+        try:
             clock.tick(60)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -199,9 +201,10 @@ def create_menu():
 
             # Button dan Text
             button("Back", ((width // 2)-100), (height // 2), 200, 50, bright_red, red, "main")
+            button("Back", ((width // 2)-100), (height // 2)+100, 200, 50, bright_red, red, "main")
             pygame.display.update()
-    except Done:
-        pass
+        except Done:
+            break
 
 def join_menu():
     start = True
@@ -212,8 +215,9 @@ def join_menu():
 
     input_box1 = InputBox(((width // 2)-150), (height // 2)-50, 300, 50)
     input_boxes = [input_box1]
-    try:
-        while start:
+    
+    while start:
+        try:
             clock.tick(60)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -262,8 +266,8 @@ def join_menu():
             button("Back", ((width // 2)-100), (height // 2)+100, 200, 50, bright_red, red, "main")
 
             pygame.display.update()
-    except Done:
-        pass
+        except Done:
+            break
 
 def movement(p,rect,enemy):
     keys = pygame.key.get_pressed()
@@ -379,16 +383,16 @@ def main():
 
         if state == "main":
             main_menu()
-            pass
+            # pass
         elif state == "create":
             create_menu()
-            pass
+            # pass
         elif state == "join":
             join_menu()
-            pass
+            # pass
         elif state == "game":
             game()
-            pass
+            # pass
         print(state)
 
 clock = pygame.time.Clock()
