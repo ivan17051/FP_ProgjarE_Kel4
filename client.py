@@ -8,6 +8,8 @@ class Done(Exception): pass
 
 # State: "main", "start", "game"
 state = "main"
+server = ""
+n = ""
 
 width = 1280
 height = 720
@@ -27,8 +29,12 @@ bright_red = (150,0,0)
 white = (255,255,255)
 black = (0,0,0)
 
+def convertTuple(tup): 
+    str =  ''.join(tup) 
+    return str
+
 class InputBox:
-    def __init__(self, x, y, w, h, text=''):
+    def __init__(self, x, y, w, h, text=""):
         self.rect = pygame.Rect(x, y, w, h)
         self.color = red
         self.text = text
@@ -87,8 +93,10 @@ def redrawWindow(win,player, player2):
     # player2.draw(win)
     pygame.display.update()
 
-def button(msg, x, y, wid, hei, ac, ic, action=None):
+def button(msg, x, y, wid, hei, ac, ic, action=None, *arg):
     global state
+    global server
+    global n
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
 
@@ -98,11 +106,17 @@ def button(msg, x, y, wid, hei, ac, ic, action=None):
             if action == "main":
                 state = "main"
                 raise Done
-            if action == "create":
-                state = "create"
+            if action == "joinmenu":
+                state = "join"
+                raise Done
+            if action == "start":
+                state = "game"
                 raise Done
             if action == "join":
-                state = "join"
+                state = "create"
+                nserver = convertTuple(arg)
+                server = nserver
+                n = Network(server)
                 raise Done
             if action == "quit":
                 pygame.quit()
@@ -158,7 +172,7 @@ def main_menu():
             win.blit(text, textRect)
 
             # Button
-            button("Join Game", ((width // 2)-100), (height // 2), 200, 50, bright_red, red, "join")
+            button("Join Game", ((width // 2)-100), (height // 2), 200, 50, bright_red, red, "joinmenu")
             # button("Create Game", ((width // 2)-100), ((height // 2)+75), 200, 50, bright_red, red, "create")
             button("Quit", ((width // 2)-100), ((height // 2)+75), 200, 50, bright_red, red, "quit")
             # pygame.draw.rect(win, red,((width // 2)-100,(height // 2),200,50),3)
@@ -173,6 +187,11 @@ def create_menu():
     # clock = pygame.time.Clock()
     bgX = 0
     bgX2 = bg.get_width()
+
+    p = n.getP()
+    p2 = n.send(p)
+
+    players = [p.name, p2.name]
     
     while start:
         try:
@@ -195,12 +214,31 @@ def create_menu():
             if bgX2 < bg.get_width() * -1:
                 bgX2 = bg.get_width()
 
-
             win.blit(bg, (bgX, 0))  # draws our first bg image
             win.blit(bg, (bgX2, 0))  # draws the seconf bg image
 
             # Button dan Text
-            button("Back", ((width // 2)-100), (height // 2), 200, 50, bright_red, red, "main")
+            text = FONT.render("Server: " + server, True, red) 
+            textRect = text.get_rect()
+            # textRect.w = 150
+            # textRect.h = 30
+            # textRect.center = (75,30)
+            win.blit(text, textRect)
+
+            pos = (100,50)
+            for name in players:
+                text = FONT.render(name, True, red) 
+                textRect = text.get_rect()
+                # textRect.w = 150
+                # textRect.h = 30
+                textRect.center = pos
+                win.blit(text, textRect)
+
+                t = list(pos)
+                t[1]+=50
+                pos = tuple(t) 
+
+            button("Start", 1050, 10, 200, 50, bright_red, red, "start")
             button("Back", ((width // 2)-100), (height // 2)+100, 200, 50, bright_red, red, "main")
             pygame.display.update()
         except Done:
@@ -262,7 +300,7 @@ def join_menu():
 
             # text_surface = baseFont.render(ip_server, True, black)
             # win.blit(text_surface, (input_rect.x + 5, input_rect.y + 15))
-            button("Join", ((width // 2)-100), (height // 2)+25, 200, 50, bright_red, red, "")
+            button("Join", ((width // 2)-100), (height // 2)+25, 200, 50, bright_red, red, "join", input_boxes[0].text)
             button("Back", ((width // 2)-100), (height // 2)+100, 200, 50, bright_red, red, "main")
 
             pygame.display.update()
@@ -316,7 +354,7 @@ def game():
     bgX = 0
     bgX2 = bg.get_width()
 
-    n = Network()
+    # n = Network()
     p = n.getP()
     p2 = n.send(p)
 
