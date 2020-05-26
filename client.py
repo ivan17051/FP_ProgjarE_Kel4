@@ -115,8 +115,8 @@ def main_menu():
             win.blit(text, textRect)
 
             # Button
-            button("Create Game", ((width // 2)-100), (height // 2), 200, 50, bright_red, red, "create")
-            button("Join Game", ((width // 2)-100), ((height // 2)+75), 200, 50, bright_red, red, "join")
+            button("Join Game", ((width // 2)-100), (height // 2), 200, 50, bright_red, red, "join")
+            button("Create Game", ((width // 2)-100), ((height // 2)+75), 200, 50, bright_red, red, "create")
             button("Quit", ((width // 2)-100), ((height // 2)+150), 200, 50, bright_red, red, "quit")
             # pygame.draw.rect(win, red,((width // 2)-100,(height // 2),200,50),3)
             # pygame.draw.rect(win, red,((width // 2)-100,(height // 2)+75,200,50),3)
