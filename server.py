@@ -50,6 +50,8 @@ def threaded_client(conn, player):
                 # obstacle script
 
             conn.sendall(pickle.dumps(reply))
+                
+
         except:
             break
 
