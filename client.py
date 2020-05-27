@@ -11,11 +11,12 @@ state = "main"
 server = ""
 n = ""
 
+pygame.init()
 width = 1280
 height = 720
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Fligo")
-pygame.font.init()
+# pygame.font.init()
 
 baseFont = pygame.font.Font(None, 35)
 font = pygame.font.Font(os.getcwd() + '\\Resources\\fonts\\SnesItalic-vmAPZ.ttf', 128)
@@ -190,15 +191,16 @@ def create_menu():
 
     p = n.getP()
     p2 = n.send(p)
-
-    players = [p.name, p2.name]
     
+    players = [p.name, p2.name]
+
     while start:
+    
         try:
             clock.tick(60)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    menu = False
+                    # menu = False
                     pygame.quit()
             
             # main menu
@@ -246,7 +248,6 @@ def create_menu():
 def join_menu():
     start = True
     # clock = pygame.time.Clock()
-    ip_server = ''
     bgX = 0
     bgX2 = bg.get_width()
 
@@ -258,7 +259,7 @@ def join_menu():
             clock.tick(60)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    menu = False
+                    # menu = False
                     pygame.quit()
                 # if event.type == pygame.KEYDOWN:
                 #     if event.key == pygame.K_BACKSPACE:
@@ -346,8 +347,6 @@ def join_menu():
 #     if keys[pygame.K_DOWN] and way[1]:
 #         p.y += p.vel
 
-
-
 def game():
     game = True
     bgX = 0
@@ -378,7 +377,6 @@ def game():
                 game = False
                 pygame.quit()
 
-        
         # if(doRectsOverlap(p.rect,p2.rect)):
             # p.move()
         # if p_rect.colliderect(p2.rect):
@@ -406,8 +404,14 @@ def game():
 
         win.blit(p_img, p.rect)
         win.blit(p2_img, p2.rect)
-        pygame.display.update()
 
+        pygame.draw.rect(win, white,((width-110),((height // 2)-160),70,370))
+        button("1", (width-100), (height // 2)+150, 50, 50, bright_red, red,)
+        button("2", (width-100), (height // 2)+75, 50, 50, bright_red, red,)
+        button("3", (width-100), (height // 2), 50, 50, bright_red, red,)
+        button("4", (width-100), (height // 2)-75, 50, 50, bright_red, red,)
+        button("5", (width-100), (height // 2)-150, 50, 50, bright_red, red,)
+        pygame.display.update()
 
 def main():
     run = True
