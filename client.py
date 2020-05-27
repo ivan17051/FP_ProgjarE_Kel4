@@ -223,20 +223,19 @@ def create_menu():
             # textRect.w = 150
             # textRect.h = 30
             # textRect.center = (75,30)
+            win.blit(text, (50, 10, 200, 50))
+
+            pos = ((width // 2),(height // 2))
+            text = FONT.render(players[0], True, red) 
+            textRect = text.get_rect()
+            # textRect.w = 150
+            # textRect.h = 30
+            textRect.center = pos
             win.blit(text, textRect)
 
-            pos = (100,50)
-            for name in players:
-                text = FONT.render(name, True, red) 
-                textRect = text.get_rect()
-                # textRect.w = 150
-                # textRect.h = 30
-                textRect.center = pos
-                win.blit(text, textRect)
-
-                t = list(pos)
-                t[1]+=50
-                pos = tuple(t) 
+                # t = list(pos)
+                # t[1]+=50
+                # pos = tuple(t) 
 
             button("Start", 1050, 10, 200, 50, bright_red, red, "start")
             button("Back", ((width // 2)-100), (height // 2)+100, 200, 50, bright_red, red, "main")
