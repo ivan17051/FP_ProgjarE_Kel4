@@ -356,6 +356,7 @@ def game():
 
     # n = Network()
     p = n.getP()
+    p.ready = True
     p2 = n.send(p)
 
     p_img = pygame.image.load(p.image)
@@ -372,7 +373,7 @@ def game():
 
     while game:  
         clock.tick(60)
-
+        p2 = n.send(p)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game = False
