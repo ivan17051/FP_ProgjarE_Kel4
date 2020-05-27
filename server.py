@@ -4,7 +4,9 @@ from player import Player
 import pickle
 import os
 
-server = "192.168.1.6"
+# server = "192.168.100.2"
+server = socket.gethostbyname(socket.gethostname())
+print("Server: " + server)
 port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -62,6 +64,9 @@ currentPlayer = 0
 while True:
     conn, addr = s.accept()
     print("Connected to:", addr)
-
+    print(currentPlayer)
+    
+    if currentPlayer > 1:
+        currentPlayer = 0
     start_new_thread(threaded_client, (conn, currentPlayer))
     currentPlayer += 1
