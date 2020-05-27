@@ -4,7 +4,7 @@ from player import Player
 import pickle
 import os
 
-server = "192.168.1.18"
+server = "192.168.1.6"
 port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -42,8 +42,12 @@ def threaded_client(conn, player):
                 else:
                     reply = players[1]
 
-                print("Received: ", data)
-                print("Sending : ", reply)
+                # print("Received: ", data)
+                # print("Sending : ", reply)
+
+            if(players[0].ready and players[1].ready):
+                print("all ready")
+                # obstacle script
 
             conn.sendall(pickle.dumps(reply))
         except:
