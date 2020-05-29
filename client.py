@@ -3,6 +3,7 @@ from network import Network
 from player import Player
 import os
 import socket
+import random
 
 class Done(Exception): pass
 
@@ -323,6 +324,11 @@ def game():
     p.players = [pygame.Rect(p2.rect)]
     # players = [pygame.Rect(p2.rect)]
 
+    obs_startx = width - 200
+    obs_starty = random.randrange(0, height)
+    obs_speed = 10
+    obs_width = 100
+    obs_height = 100
 
     # print(p.rect)
     # p_rect = p.rect
@@ -365,6 +371,17 @@ def game():
         win.blit(p_img, p.rect)
         win.blit(p2_img, p2.rect)
 
+        # Obstacle
+        pygame.draw.rect(win, white,(obs_startx,obs_starty,obs_width,obs_height))
+        obs_startx -= obs_speed
+
+        if obs_startx < -200:
+            obs_startx = width
+            obs_starty = random.randrange(0, height)
+            obs_width = random.randrange(100, 200)
+            obs_height = random.randrange(100, 200)
+
+        # Chat
         pygame.draw.rect(win, white,((width-110),((height // 2)-160),70,370))
         button("1", (width-100), (height // 2)+150, 50, 50, bright_red, red,)
         button("2", (width-100), (height // 2)+75, 50, 50, bright_red, red,)
