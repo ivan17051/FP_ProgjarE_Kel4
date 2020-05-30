@@ -395,7 +395,7 @@ class ChatInput:
     """
     This class lets the user input a piece of text, e.g. a name or a message.
     This class let's the user input a short, one-lines piece of text at a blinking cursor
-    that can be moved using the arrow-keys. Delete, home and end work as well.
+    that can be moved using the arrow-keys. Delete, Home and End work as well.
     """
     def __init__(
             self,
@@ -410,10 +410,10 @@ class ChatInput:
             max_string_length=-1):
         """
         :param initial_string: Initial text to be displayed
-        :param font_family: name or list of names for font (see pygame.font.match_font for precise format)
+        :param font_family: name or list of names for font
         :param font_size:  Size of font in pixels
-        :param antialias: Determines if antialias is applied to font (uses more processing power)
-        :param text_color: Color of text (duh)
+        :param antialias: Determines if antialias is applied to font
+        :param text_color: Color of text
         :param cursor_color: Color of cursor
         :param repeat_keys_initial_ms: Time in ms before keys are repeated when held
         :param repeat_keys_interval_ms: Interval between key press repetition when held
@@ -437,7 +437,7 @@ class ChatInput:
         self.surface.set_alpha(0)
 
         # Vars to make keydowns repeat after user pressed a key for some time:
-        self.keyrepeat_counters = {}  # {event.key: (counter_int, event.unicode)} (look for "***")
+        self.keyrepeat_counters = {}  
         self.keyrepeat_intial_interval_ms = repeat_keys_initial_ms
         self.keyrepeat_interval_ms = repeat_keys_interval_ms
 
@@ -446,7 +446,7 @@ class ChatInput:
         self.cursor_surface.fill(cursor_color)
         self.cursor_position = len(initial_string)  # Inside text
         self.cursor_visible = True  # Switches every self.cursor_switch_ms ms
-        self.cursor_switch_ms = 500  # /|\
+        self.cursor_switch_ms = 500  
         self.cursor_ms_counter = 0
 
         self.clock = pygame.time.Clock()
@@ -466,7 +466,7 @@ class ChatInput:
                         + self.input_string[self.cursor_position:]
                     )
 
-                    # Subtract one from cursor_pos, but do not go below zero:
+                    # Subtract one from cursor_pos
                     self.cursor_position = max(self.cursor_position - 1, 0)
                 elif event.key == pl.K_DELETE:
                     self.input_string = (
@@ -478,11 +478,11 @@ class ChatInput:
                     return True
 
                 elif event.key == pl.K_RIGHT:
-                    # Add one to cursor_pos, but do not exceed len(input_string)
+                    # Add one to cursor_pos
                     self.cursor_position = min(self.cursor_position + 1, len(self.input_string))
 
                 elif event.key == pl.K_LEFT:
-                    # Subtract one from cursor_pos, but do not go below zero:
+                    # Subtract one from cursor_pos
                     self.cursor_position = max(self.cursor_position - 1, 0)
 
                 elif event.key == pl.K_END:
