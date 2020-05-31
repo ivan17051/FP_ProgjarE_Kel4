@@ -5,6 +5,7 @@ from player import Player
 import os
 import socket
 import random
+import time
 
 class Done(Exception): pass
 
@@ -31,6 +32,7 @@ red = (255,0,0)
 bright_red = (150,0,0)
 white = (255,255,255)
 black = (0,0,0)
+green = (0,128,0)
 
 def convertTuple(tup): 
     str =  ''.join(tup) 
@@ -101,6 +103,7 @@ def button(msg, x, y, wid, hei, ac, ic, action=None, pic=None, *arg):
     global server
     global n
     mouse = pygame.mouse.get_pos()
+    # print(mouse)
     click = pygame.mouse.get_pressed()
 
     if x + wid > mouse[0] > x and y + hei > mouse[1] > y:
@@ -138,6 +141,18 @@ def button(msg, x, y, wid, hei, ac, ic, action=None, pic=None, *arg):
         textRect2 = smallText.get_rect()
         textRect2.center = (x + (wid/2), y + (hei/2))
         win.blit(smallText, textRect2)
+
+# For win/lose notif
+def message_display(text):
+    TextSurf = font.render(text, True, red)
+    TextRect = TextSurf.get_rect()
+    TextRect.center = ((width/2), (height/2))
+    
+    win.blit(TextSurf, TextRect)
+    pygame.display.update()
+
+    time.sleep(2)
+    game()
 
 
 def main_menu():
@@ -334,8 +349,9 @@ def game():
     r = list(p2.obsRect)
     obs_startx = r[0]
     obs_starty = r[1]
-    obs_width = r[2]
-    obs_height = r[3]
+    obs_starty2 = r[2]
+    obs_width = r[3]
+    obs_height = r[4]
 
     # obs_startx = width - 200
     # obs_starty = random.randrange(0, height)
@@ -390,8 +406,9 @@ def game():
             r = list(p2.obsRect)
             obs_startx = r[0]
             obs_starty = r[1]
-            obs_width = r[2]
-            obs_height = r[3]
+            obs_starty2 = r[2]
+            obs_width = r[3]
+            obs_height = r[4]
             # obs_startx = width
             # obs_starty = random.randrange(0, height)
             # obs_width = random.randrange(100, 200)
@@ -402,7 +419,12 @@ def game():
         # obs_width = r[2]
         # obs_height = r[3]
         # print(str(obs_startx) +","+str(obs_starty) +","+str(obs_width) +","+str(obs_height))
-        pygame.draw.rect(win, white,(obs_startx,obs_starty,obs_width,obs_height))
+        
+        # pygame.draw.rect(win, green,(obs_startx,obs_starty,obs_width,obs_height))
+        obsImg = pygame.image.load("Resources/obs/tp-small.png")
+        win.blit(obsImg, (obs_startx, obs_starty2))
+        obsImg = pygame.image.load("Resources/obs/bp-small.png")
+        win.blit(obsImg, (obs_startx, obs_starty))
         obs_startx -= obs_speed
 
         p.Obstacle(pygame.Rect((obs_startx,obs_starty,obs_width,obs_height)))

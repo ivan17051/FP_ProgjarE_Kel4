@@ -12,6 +12,7 @@ print("Server: " + server)
 port = 5555
 x = 0
 y = 0
+y2 = 0
 w = 0
 h = 0
 
@@ -33,19 +34,24 @@ players = [Player("Player 1",0,0,100,85,os.getcwd() + '\\Resources\\img\\blue.pn
 def generateObstacle():
     global x
     global y
+    global y2
     global w
     global h
+    displayWidth = 1280
+    displayHeight = 720
     while True:
-        x = 1280
-        y = random.randrange(0, 720)
-        w = random.randrange(100, 200)
-        h = random.randrange(100, 200)
+        x = displayWidth
+        y = random.randrange(displayHeight-300, displayHeight-100)
+        y2 = random.randrange(0-400, 0-100)
+        w = 100 #random.randrange(100, 200)
+        h = 500 #random.randrange(100, 300)
         # print(str(x) +","+str(y) +","+str(w) +","+str(h))
         time.sleep(6)
 
 def threaded_client(conn, player):
     global x
     global y
+    global y2
     global w
     global h
     conn.send(pickle.dumps(players[player]))
@@ -71,12 +77,12 @@ def threaded_client(conn, player):
                 # print("all ready")
                 # obstacle script
                 if player == 1:
-                    players[0].obsRect = (x,y,w,h)
-                    print(str(players[0].obsRect[0]) +","+str(players[0].obsRect[1]) +","+str(players[0].obsRect[2]) +","+str(players[0].obsRect[3]))
+                    players[0].obsRect = (x,y,y2,w,h)
+                    print(str(players[0].obsRect[0]) +","+str(players[0].obsRect[1]) +","+str(players[0].obsRect[2]) +","+str(players[0].obsRect[3])+","+str(players[0].obsRect[4]))
                     reply = players[0]
                 else:
-                    players[1].obsRect = (x,y,w,h)
-                    print(str(players[1].obsRect[0]) +","+str(players[1].obsRect[1]) +","+str(players[1].obsRect[2]) +","+str(players[1].obsRect[3]))
+                    players[1].obsRect = (x,y,y2,w,h)
+                    print(str(players[1].obsRect[0]) +","+str(players[1].obsRect[1]) +","+str(players[1].obsRect[2]) +","+str(players[1].obsRect[3])+","+str(players[1].obsRect[4]))
                     reply = players[1]
 
                 conn.sendall(pickle.dumps(reply))
