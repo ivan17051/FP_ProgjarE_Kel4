@@ -10,7 +10,7 @@ import time
 class Done(Exception): pass
 
 # State: "main", "start", "game"
-state = "main"
+state = "lose"
 server = ""
 n = ""
 
@@ -331,7 +331,116 @@ def join_menu():
         except Done:
             break
 
+def win_menu():
+    over = True
+    # clock = pygame.time.Clock()
+    bgX = 0
+    bgX2 = bg.get_width()
+    
+    while over:
+        try:
+            clock.tick(60)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    # menu = False
+                    pygame.quit()
+                # if event.type == pygame.KEYDOWN:
+                #     if event.key == pygame.K_BACKSPACE:
+                #         ip_server = ip_server[:-1]
+                #     else:
+                #         ip_server += event.unicode
+
+            win.fill((0,255,255))
+
+            #scolling background
+            bgX -= 0.5  # Move both background images back
+            bgX2 -= 0.5
+
+            if bgX < bg.get_width() * -1:  # If our bg is at the -width then reset its position
+                bgX = bg.get_width()
+
+            if bgX2 < bg.get_width() * -1:
+                bgX2 = bg.get_width()
+
+
+            win.blit(bg, (bgX, 0))  # draws our first bg image
+            win.blit(bg, (bgX2, 0))  # draws the seconf bg image
+
+            # input_rect = pygame.Rect(((width // 2)-100), (height // 2)-50, 200, 50)
+            # pygame.draw.rect(win, white, input_rect)
+
+            text = font.render('You Win', True, red) 
+            textRect = text.get_rect()
+
+            textRect.center = (width // 2, (height // 2))
+            win.blit(text, textRect)
+
+
+            # text_surface = baseFont.render(ip_server, True, black)
+            # win.blit(text_surface, (input_rect.x + 5, input_rect.y + 15))
+            # button("Join", ((width // 2)-100), (height // 2)+25, 200, 50, bright_red, red, "join", input_boxes[0].text)
+            button("Back", 25, 25, 200, 50, bright_red, red, "main")
+
+            pygame.display.update()
+        except Done:
+            break
+
+def lose_menu():
+    over = True
+    # clock = pygame.time.Clock()
+    bgX = 0
+    bgX2 = bg.get_width()
+    
+    while over:
+        try:
+            clock.tick(60)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    # menu = False
+                    pygame.quit()
+                # if event.type == pygame.KEYDOWN:
+                #     if event.key == pygame.K_BACKSPACE:
+                #         ip_server = ip_server[:-1]
+                #     else:
+                #         ip_server += event.unicode
+
+            win.fill((0,255,255))
+
+            #scolling background
+            bgX -= 0.5  # Move both background images back
+            bgX2 -= 0.5
+
+            if bgX < bg.get_width() * -1:  # If our bg is at the -width then reset its position
+                bgX = bg.get_width()
+
+            if bgX2 < bg.get_width() * -1:
+                bgX2 = bg.get_width()
+
+
+            win.blit(bg, (bgX, 0))  # draws our first bg image
+            win.blit(bg, (bgX2, 0))  # draws the seconf bg image
+
+            # input_rect = pygame.Rect(((width // 2)-100), (height // 2)-50, 200, 50)
+            # pygame.draw.rect(win, white, input_rect)
+
+            text = font.render('You Lose', True, red) 
+            textRect = text.get_rect()
+
+            textRect.center = (width // 2, (height // 2))
+            win.blit(text, textRect)
+
+
+            # text_surface = baseFont.render(ip_server, True, black)
+            # win.blit(text_surface, (input_rect.x + 5, input_rect.y + 15))
+            # button("Join", ((width // 2)-100), (height // 2)+25, 200, 50, bright_red, red, "join", input_boxes[0].text)
+            button("Back", 25, 25, 200, 50, bright_red, red, "main")
+
+            pygame.display.update()
+        except Done:
+            break
+
 def game():
+    global state
     game = True
     bgX = 0
     bgX2 = bg.get_width()
@@ -429,6 +538,11 @@ def game():
 
         p.Obstacle(pygame.Rect((obs_startx,obs_starty,obs_width,obs_height)))
         print(p.dead)
+
+        if p.dead:
+            state = "lose"
+        elif p2.dead:
+            state = "win"
 
         # Chat
         pygame.draw.rect(win, white,((width-110),((height // 2)-160),70,370))
@@ -627,6 +741,10 @@ def main():
         elif state == "join":
             join_menu()
             # pass
+        elif state == "win":
+            win_menu()
+        elif state == "lose":
+            lose_menu()
         elif state == "game":
             game()
             # pass
