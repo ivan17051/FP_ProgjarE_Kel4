@@ -68,7 +68,7 @@ def threaded_client(conn, player):
                 # print("Sending : ", reply)
 
             if(players[0].ready and players[1].ready):
-                print("all ready")
+                # print("all ready")
                 # obstacle script
                 if player == 1:
                     players[0].obsRect = (x,y,w,h)

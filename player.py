@@ -12,6 +12,7 @@ class Player():
         self.image = image
         self.ready = False
         self.obsRect = (0,0,0,0)
+        self.dead = False
 
     def draw(self, win):
         win.blit(self.image, self.rect)
@@ -19,6 +20,21 @@ class Player():
 
     def getRect(self):
         return self.rect
+
+    def Obstacle(self,obs):
+        col = [False] * 8
+        col[0] = obs.collidepoint(pygame.Rect(self.rect).topleft)
+        col[1] = obs.collidepoint(pygame.Rect(self.rect).topright)
+        col[2] = obs.collidepoint(pygame.Rect(self.rect).bottomleft)
+        col[3] = obs.collidepoint(pygame.Rect(self.rect).bottomright)
+
+        col[4] = obs.collidepoint(pygame.Rect(self.rect).midleft)
+        col[5] = obs.collidepoint(pygame.Rect(self.rect).midright)
+        col[6] = obs.collidepoint(pygame.Rect(self.rect).midtop)
+        col[7] = obs.collidepoint(pygame.Rect(self.rect).midbottom)
+
+        if col[0] or col[1] or col[2] or col[3] or col[4] or col[5] or col[6] or col[7]:
+            self.dead = True
 
     def movement(self,enemy):
         keys = pygame.key.get_pressed()

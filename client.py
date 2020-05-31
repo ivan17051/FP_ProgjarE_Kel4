@@ -332,7 +332,7 @@ def game():
 
     # obs_startx = width - 200
     # obs_starty = random.randrange(0, height)
-    obs_speed = 7
+    obs_speed = 9
     # obs_width = 100
     # obs_height = 100
 
@@ -396,6 +396,9 @@ def game():
         # print(str(obs_startx) +","+str(obs_starty) +","+str(obs_width) +","+str(obs_height))
         pygame.draw.rect(win, white,(obs_startx,obs_starty,obs_width,obs_height))
         obs_startx -= obs_speed
+
+        p.Obstacle(pygame.Rect((obs_startx,obs_starty,obs_width,obs_height)))
+        print(p.dead)
 
         # Chat
         pygame.draw.rect(win, white,((width-110),((height // 2)-160),70,370))
