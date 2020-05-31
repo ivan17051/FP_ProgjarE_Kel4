@@ -29,7 +29,7 @@ print("Waiting for a connection, Server Started")
 # p1 = pygame.image.load(os.getcwd() + '\\Resources\\img\\green.png').convert()
 # p2 = pygame.image.load(os.getcwd() + '\\Resources\\img\\blue.png').convert()
 
-players = [Player("Player 1",0,0,100,85,os.getcwd() + '\\Resources\\img\\blue.png'), Player("Player 2",100,100, 100,85, os.getcwd() + '\\Resources\\img\\green.png')]
+# players = [Player("Player 1",0,0,100,85,os.getcwd() + '\\Resources\\img\\blue.png'), Player("Player 2",100,100, 100,85, os.getcwd() + '\\Resources\\img\\green.png')]
 
 def generateObstacle():
     global x
@@ -60,7 +60,6 @@ def threaded_client(conn, player):
         try:
             data = pickle.loads(conn.recv(2048))
             players[player] = data
-
             if not data:
                 print("Disconnected")
                 break
@@ -76,13 +75,18 @@ def threaded_client(conn, player):
             if(players[0].ready and players[1].ready):
                 # print("all ready")
                 # obstacle script
+                print("p1: " + str(players[0].dead))
+                print("p2: " + str(players[1].dead))
+                # if(players[0].dead == True or players[1].dead == True):
+                #     players[0].game = False 
+                #     players[1].game = False
                 if player == 1:
                     players[0].obsRect = (x,y,y2,w,h)
-                    print(str(players[0].obsRect[0]) +","+str(players[0].obsRect[1]) +","+str(players[0].obsRect[2]) +","+str(players[0].obsRect[3])+","+str(players[0].obsRect[4]))
+                    # print(str(players[0].obsRect[0]) +","+str(players[0].obsRect[1]) +","+str(players[0].obsRect[2]) +","+str(players[0].obsRect[3])+","+str(players[0].obsRect[4]))
                     reply = players[0]
                 else:
                     players[1].obsRect = (x,y,y2,w,h)
-                    print(str(players[1].obsRect[0]) +","+str(players[1].obsRect[1]) +","+str(players[1].obsRect[2]) +","+str(players[1].obsRect[3])+","+str(players[1].obsRect[4]))
+                    # print(str(players[1].obsRect[0]) +","+str(players[1].obsRect[1]) +","+str(players[1].obsRect[2]) +","+str(players[1].obsRect[3])+","+str(players[1].obsRect[4]))
                     reply = players[1]
 
                 conn.sendall(pickle.dumps(reply))
