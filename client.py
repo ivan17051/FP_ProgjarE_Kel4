@@ -10,7 +10,7 @@ import time
 class Done(Exception): pass
 
 # State: "main", "start", "game"
-state = "lose"
+state = "main"
 server = ""
 n = ""
 
@@ -464,7 +464,7 @@ def game():
 
     # obs_startx = width - 200
     # obs_starty = random.randrange(0, height)
-    obs_speed = 9
+    obs_speed = 15
     # obs_width = 100
     # obs_height = 100
 
@@ -473,85 +473,95 @@ def game():
     # print(p.rect)
     # clock = pygame.time.Clock()
 
-    while game:  
-        clock.tick(60)
-        p2 = n.send(p)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                game = False
-                pygame.quit()
+    while game:
+        try:
+            clock.tick(60)
+            p2 = n.send(p)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    game = False
+                    pygame.quit()
 
-        # if(doRectsOverlap(p.rect,p2.rect)):
+            # if(doRectsOverlap(p.rect,p2.rect)):
+                # p.move()
+            # if p_rect.colliderect(p2.rect):
+            # if pygame.Rect(p.rect).collidelist(p.players) >= 0:
+            #     print("ga")
+
+            p.movement(pygame.Rect(p2.rect))
+            # movement(p,pygame.Rect(p.rect), pygame.Rect(p2.rect))
             # p.move()
-        # if p_rect.colliderect(p2.rect):
-        # if pygame.Rect(p.rect).collidelist(p.players) >= 0:
-        #     print("ga")
 
-        p.movement(pygame.Rect(p2.rect))
-        # movement(p,pygame.Rect(p.rect), pygame.Rect(p2.rect))
-        # p.move()
+            win.fill((255,255,255))
 
-        win.fill((255,255,255))
+            #scolling background
+            bgX -= 0.5  # Move both background images back
+            bgX2 -= 0.5
 
-        #scolling background
-        bgX -= 0.5  # Move both background images back
-        bgX2 -= 0.5
+            if bgX < bg.get_width() * -1:  # If our bg is at the -width then reset its position
+                bgX = bg.get_width()
 
-        if bgX < bg.get_width() * -1:  # If our bg is at the -width then reset its position
-            bgX = bg.get_width()
-
-        if bgX2 < bg.get_width() * -1:
-            bgX2 = bg.get_width()
+            if bgX2 < bg.get_width() * -1:
+                bgX2 = bg.get_width()
 
 
-        win.blit(bg, (bgX, 0))  # draws our first bg image
-        win.blit(bg, (bgX2, 0))  # draws the seconf bg image
+            win.blit(bg, (bgX, 0))  # draws our first bg image
+            win.blit(bg, (bgX2, 0))  # draws the seconf bg image
 
-        win.blit(p_img, p.rect)
-        win.blit(p2_img, p2.rect)
+            win.blit(p_img, p.rect)
+            win.blit(p2_img, p2.rect)
 
-        # Obstacle
-        if obs_startx < -200:
-            r = list(p2.obsRect)
-            obs_startx = r[0]
-            obs_starty = r[1]
-            obs_starty2 = r[2]
-            obs_width = r[3]
-            obs_height = r[4]
-            # obs_startx = width
-            # obs_starty = random.randrange(0, height)
-            # obs_width = random.randrange(100, 200)
-            # obs_height = random.randrange(100, 400)
+            # Obstacle
+            if obs_startx < -200:
+                r = list(p2.obsRect)
+                obs_startx = r[0]
+                obs_starty = r[1]
+                obs_starty2 = r[2]
+                obs_width = r[3]
+                obs_height = r[4]
+                # obs_startx = width
+                # obs_starty = random.randrange(0, height)
+                # obs_width = random.randrange(100, 200)
+                # obs_height = random.randrange(100, 400)
 
-        # obs_startx = r[0]
-        # obs_starty = r[1]
-        # obs_width = r[2]
-        # obs_height = r[3]
-        # print(str(obs_startx) +","+str(obs_starty) +","+str(obs_width) +","+str(obs_height))
-        
-        # pygame.draw.rect(win, green,(obs_startx,obs_starty,obs_width,obs_height))
-        obsImg = pygame.image.load("Resources/obs/tp-small.png")
-        win.blit(obsImg, (obs_startx, obs_starty2))
-        obsImg = pygame.image.load("Resources/obs/bp-small.png")
-        win.blit(obsImg, (obs_startx, obs_starty))
-        obs_startx -= obs_speed
+            # obs_startx = r[0]
+            # obs_starty = r[1]
+            # obs_width = r[2]
+            # obs_height = r[3]
+            # print(str(obs_startx) +","+str(obs_starty) +","+str(obs_width) +","+str(obs_height))
+            
+            # pygame.draw.rect(win, green,(obs_startx,obs_starty,obs_width,obs_height))
+            obsImg = pygame.image.load("Resources/obs/tp-small.png")
+            win.blit(obsImg, (obs_startx, obs_starty2))
+            obsImg = pygame.image.load("Resources/obs/bp-small.png")
+            win.blit(obsImg, (obs_startx, obs_starty))
+            obs_startx -= obs_speed
 
-        p.Obstacle(pygame.Rect((obs_startx,obs_starty,obs_width,obs_height)))
-        print(p.dead)
+            p.Obstacle(pygame.Rect((obs_startx,obs_starty,obs_width,obs_height)))
+            p.Obstacle(pygame.Rect((obs_startx,obs_starty2,obs_width,obs_height)))
+            # print(p.dead)
 
-        if p.dead:
-            state = "lose"
-        elif p2.dead:
-            state = "win"
+            if p.dead:
+                p2 = n.send(p)
+                state = "lose"
+                raise Done
+                # break
+            if p2.dead == True:
+                print(p2.dead)
+                state = "win"
+                raise Done
+                # break
 
-        # Chat
-        pygame.draw.rect(win, white,((width-110),((height // 2)-160),70,370))
-        button("", (width-100), (height // 2)+150, 50, 50, bright_red, red, None, "Resources/emoji-png/003-happy-small.png")
-        button("", (width-100), (height // 2)+75, 50, 50, bright_red, red, None, "Resources/emoji-png/004-laughing-small.png")
-        button("", (width-100), (height // 2), 50, 50, bright_red, red, None, "Resources/emoji-png/007-crying-small.png")
-        button("", (width-100), (height // 2)-75, 50, 50, bright_red, red, None, "Resources/emoji-png/013-tongue-small.png")
-        button("", (width-100), (height // 2)-150, 50, 50, bright_red, red, None, "Resources/emoji-png/022-suspicious-small.png")
-        pygame.display.update()
+            # Chat
+            pygame.draw.rect(win, white,((width-110),((height // 2)-160),70,370))
+            button("", (width-100), (height // 2)+150, 50, 50, bright_red, red, None, "Resources/emoji-png/003-happy-small.png")
+            button("", (width-100), (height // 2)+75, 50, 50, bright_red, red, None, "Resources/emoji-png/004-laughing-small.png")
+            button("", (width-100), (height // 2), 50, 50, bright_red, red, None, "Resources/emoji-png/007-crying-small.png")
+            button("", (width-100), (height // 2)-75, 50, 50, bright_red, red, None, "Resources/emoji-png/013-tongue-small.png")
+            button("", (width-100), (height // 2)-150, 50, 50, bright_red, red, None, "Resources/emoji-png/022-suspicious-small.png")
+            pygame.display.update()
+        except Done:
+            break
 
 class ChatInput:
     """
