@@ -324,12 +324,17 @@ def game():
 
     p.players = [pygame.Rect(p2.rect)]
     # players = [pygame.Rect(p2.rect)]
+    r = list(p2.obsRect)
+    obs_startx = r[0]
+    obs_starty = r[1]
+    obs_width = r[2]
+    obs_height = r[3]
 
-    obs_startx = width - 200
-    obs_starty = random.randrange(0, height)
-    obs_speed = 10
-    obs_width = 100
-    obs_height = 100
+    # obs_startx = width - 200
+    # obs_starty = random.randrange(0, height)
+    obs_speed = 7
+    # obs_width = 100
+    # obs_height = 100
 
     # print(p.rect)
     # p_rect = p.rect
@@ -373,14 +378,24 @@ def game():
         win.blit(p2_img, p2.rect)
 
         # Obstacle
+        if obs_startx < -200:
+            r = list(p2.obsRect)
+            obs_startx = r[0]
+            obs_starty = r[1]
+            obs_width = r[2]
+            obs_height = r[3]
+            # obs_startx = width
+            # obs_starty = random.randrange(0, height)
+            # obs_width = random.randrange(100, 200)
+            # obs_height = random.randrange(100, 400)
+
+        # obs_startx = r[0]
+        # obs_starty = r[1]
+        # obs_width = r[2]
+        # obs_height = r[3]
+        # print(str(obs_startx) +","+str(obs_starty) +","+str(obs_width) +","+str(obs_height))
         pygame.draw.rect(win, white,(obs_startx,obs_starty,obs_width,obs_height))
         obs_startx -= obs_speed
-
-        if obs_startx < -200:
-            obs_startx = width
-            obs_starty = random.randrange(0, height)
-            obs_width = random.randrange(100, 200)
-            obs_height = random.randrange(100, 200)
 
         # Chat
         pygame.draw.rect(win, white,((width-110),((height // 2)-160),70,370))

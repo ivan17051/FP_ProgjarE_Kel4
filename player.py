@@ -11,7 +11,7 @@ class Player():
         self.vel = 3
         self.image = image
         self.ready = False
-        # self.players
+        self.obsRect = (0,0,0,0)
 
     def draw(self, win):
         win.blit(self.image, self.rect)
