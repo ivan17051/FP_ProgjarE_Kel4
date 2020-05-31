@@ -11,7 +11,7 @@ class Player():
         self.vel = 3
         self.image = image
         self.ready = False
-        self.obsRect = (0,0,0,0)
+        self.obsRect = (0,0,0,0,0)
         self.dead = False
 
     def draw(self, win):
