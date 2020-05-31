@@ -20,6 +20,12 @@ class Network:
         except:
             pass
 
+    def disconnect(self):
+        try:
+            self.client.close()
+        except:
+            pass
+
     def send(self, data):
         try:
             self.client.send(pickle.dumps(data))

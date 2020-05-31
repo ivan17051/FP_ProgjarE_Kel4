@@ -544,11 +544,13 @@ def game():
             if p.dead:
                 p2 = n.send(p)
                 state = "lose"
+                n.disconnect()
                 raise Done
                 # break
             if p2.dead == True:
                 print(p2.dead)
                 state = "win"
+                n.disconnect()
                 raise Done
                 # break
 

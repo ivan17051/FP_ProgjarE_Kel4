@@ -10,6 +10,9 @@ import time
 server = socket.gethostbyname(socket.gethostname())
 print("Server: " + server)
 port = 5555
+
+newGame = True
+
 x = 0
 y = 0
 y2 = 0
@@ -29,7 +32,7 @@ print("Waiting for a connection, Server Started")
 # p1 = pygame.image.load(os.getcwd() + '\\Resources\\img\\green.png').convert()
 # p2 = pygame.image.load(os.getcwd() + '\\Resources\\img\\blue.png').convert()
 
-# players = [Player("Player 1",0,0,100,85,os.getcwd() + '\\Resources\\img\\blue.png'), Player("Player 2",100,100, 100,85, os.getcwd() + '\\Resources\\img\\green.png')]
+players = [Player("Player 1",0,0,100,85,os.getcwd() + '\\Resources\\img\\blue.png'), Player("Player 2",100,100, 100,85, os.getcwd() + '\\Resources\\img\\green.png')]
 
 def generateObstacle():
     global x
@@ -104,11 +107,14 @@ start_new_thread(generateObstacle, ())
 
 currentPlayer = 0
 while True:
+    # global players
+
     conn, addr = s.accept()
     print("Connected to:", addr)
     print(currentPlayer)
     
     if currentPlayer > 1:
         currentPlayer = 0
+        players = [Player("Player 1",0,0,100,85,os.getcwd() + '\\Resources\\img\\blue.png'), Player("Player 2",100,100, 100,85, os.getcwd() + '\\Resources\\img\\green.png')]
     start_new_thread(threaded_client, (conn, currentPlayer))
     currentPlayer += 1
