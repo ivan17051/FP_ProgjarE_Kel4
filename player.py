@@ -8,10 +8,10 @@ class Player():
         self.width = width
         self.height = height
         self.rect = (x,y,width,height)
-        self.vel = 3
+        self.vel = 7
         self.image = image
         self.ready = False
-        self.obsRect = (0,0,0,0,0)
+        self.obsRect = (-200,0,0,0,0)
         self.dead = False
 
     def draw(self, win):
