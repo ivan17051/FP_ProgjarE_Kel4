@@ -96,7 +96,7 @@ def redrawWindow(win,player, player2):
     # player2.draw(win)
     pygame.display.update()
 
-def button(msg, x, y, wid, hei, ac, ic, action=None, *arg):
+def button(msg, x, y, wid, hei, ac, ic, action=None, pic=None, *arg):
     global state
     global server
     global n
@@ -128,10 +128,17 @@ def button(msg, x, y, wid, hei, ac, ic, action=None, *arg):
         pygame.draw.rect(win, ic,(x,y,wid,hei))
 
     font3 = pygame.font.Font(os.getcwd() + '\\Resources\\fonts\\SnesItalic-vmAPZ.ttf', 30)
-    smallText = font3.render(msg, True, white)
-    textRect2 = smallText.get_rect()
-    textRect2.center = (x + (wid/2), y + (hei/2))
-    win.blit(smallText, textRect2)
+    if pic != None:
+        objImg = pygame.image.load(pic)
+        objImg2 = objImg.get_rect()
+        objImg2.center = (x + (wid/2), y + (hei/2))
+        win.blit(objImg, objImg2)
+    else: 
+        smallText = font3.render(msg, True, white)
+        textRect2 = smallText.get_rect()
+        textRect2.center = (x + (wid/2), y + (hei/2))
+        win.blit(smallText, textRect2)
+
 
 def main_menu():
     menu = True
@@ -302,7 +309,7 @@ def join_menu():
 
             # text_surface = baseFont.render(ip_server, True, black)
             # win.blit(text_surface, (input_rect.x + 5, input_rect.y + 15))
-            button("Join", ((width // 2)-100), (height // 2)+25, 200, 50, bright_red, red, "join", input_boxes[0].text)
+            button("Join", ((width // 2)-100), (height // 2)+25, 200, 50, bright_red, red, "join", None, input_boxes[0].text)
             button("Back", ((width // 2)-100), (height // 2)+100, 200, 50, bright_red, red, "main")
 
             pygame.display.update()
@@ -360,6 +367,7 @@ def game():
         # p.move()
 
         win.fill((255,255,255))
+
         #scolling background
         bgX -= 0.5  # Move both background images back
         bgX2 -= 0.5
@@ -402,11 +410,11 @@ def game():
 
         # Chat
         pygame.draw.rect(win, white,((width-110),((height // 2)-160),70,370))
-        button("1", (width-100), (height // 2)+150, 50, 50, bright_red, red,)
-        button("2", (width-100), (height // 2)+75, 50, 50, bright_red, red,)
-        button("3", (width-100), (height // 2), 50, 50, bright_red, red,)
-        button("4", (width-100), (height // 2)-75, 50, 50, bright_red, red,)
-        button("5", (width-100), (height // 2)-150, 50, 50, bright_red, red,)
+        button("", (width-100), (height // 2)+150, 50, 50, bright_red, red, None, "Resources/emoji-png/003-happy-small.png")
+        button("", (width-100), (height // 2)+75, 50, 50, bright_red, red, None, "Resources/emoji-png/004-laughing-small.png")
+        button("", (width-100), (height // 2), 50, 50, bright_red, red, None, "Resources/emoji-png/007-crying-small.png")
+        button("", (width-100), (height // 2)-75, 50, 50, bright_red, red, None, "Resources/emoji-png/013-tongue-small.png")
+        button("", (width-100), (height // 2)-150, 50, 50, bright_red, red, None, "Resources/emoji-png/022-suspicious-small.png")
         pygame.display.update()
 
 class ChatInput:
@@ -585,7 +593,7 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
                 pygame.quit()
-            elif event.type == pygame.K_RETURN:
+            elif event.type == pygame.K_TAB:
                 text_input = ChatInput()
                 
         if state == "main":
