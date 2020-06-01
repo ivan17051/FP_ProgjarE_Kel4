@@ -582,7 +582,7 @@ def game():
                     if (time.time() - t >= 3):
                         p.emot = 0
                     else:
-                        objImg = pygame.image.load("Resources/emoji-png/003-happy-small.png")
+                        objImg = pygame.image.load("Resources/emoji-png/003-happy-chat.png")
                         objImg2 = objImg.get_rect()
                         objImg2.center = (p.x, p.y + 5)
                         win.blit(objImg, objImg2)
@@ -590,7 +590,7 @@ def game():
                     if (time.time() - t >= 3):
                         p.emot = 0
                     else:
-                        objImg = pygame.image.load("Resources/emoji-png/004-laughing-small.png")
+                        objImg = pygame.image.load("Resources/emoji-png/004-laughing-chat.png")
                         objImg2 = objImg.get_rect()
                         objImg2.center = (p.x, p.y + 5)
                         win.blit(objImg, objImg2)
@@ -598,7 +598,7 @@ def game():
                     if (time.time() - t >= 3):
                         p.emot = 0
                     else:
-                        objImg = pygame.image.load("Resources/emoji-png/007-crying-small.png")
+                        objImg = pygame.image.load("Resources/emoji-png/007-crying-chat.png")
                         objImg2 = objImg.get_rect()
                         objImg2.center = (p.x, p.y + 5)
                         win.blit(objImg, objImg2)
@@ -606,7 +606,7 @@ def game():
                     if (time.time() - t >= 3):
                         p.emot = 0
                     else:
-                        objImg = pygame.image.load("Resources/emoji-png/013-tongue-small.png")
+                        objImg = pygame.image.load("Resources/emoji-png/013-tongue-chat.png")
                         objImg2 = objImg.get_rect()
                         objImg2.center = (p.x, p.y + 5)
                         win.blit(objImg, objImg2)
@@ -614,7 +614,7 @@ def game():
                     if (time.time() - t >= 3):
                         p.emot = 0
                     else:
-                        objImg = pygame.image.load("Resources/emoji-png/022-suspicious-small.png")
+                        objImg = pygame.image.load("Resources/emoji-png/022-suspicious-chat.png")
                         objImg2 = objImg.get_rect()
                         objImg2.center = (p.x, p.y + 5)
                         win.blit(objImg, objImg2)
@@ -623,27 +623,27 @@ def game():
 
             if p2.emot != 0:
                 if p2.emot == 1:
-                    objImg = pygame.image.load("Resources/emoji-png/003-happy-small.png")
+                    objImg = pygame.image.load("Resources/emoji-png/003-happy-chat.png")
                     objImg2 = objImg.get_rect()
                     objImg2.center = (p2.x, p2.y + 5)
                     win.blit(objImg, objImg2)
                 if p2.emot == 2:
-                    objImg = pygame.image.load("Resources/emoji-png/004-laughing-small.png")
+                    objImg = pygame.image.load("Resources/emoji-png/004-laughing-chat.png")
                     objImg2 = objImg.get_rect()
                     objImg2.center = (p2.x, p2.y + 5)
                     win.blit(objImg, objImg2)
                 if p2.emot == 3:
-                    objImg = pygame.image.load("Resources/emoji-png/007-crying-small.png")
+                    objImg = pygame.image.load("Resources/emoji-png/007-crying-chat.png")
                     objImg2 = objImg.get_rect()
                     objImg2.center = (p2.x, p2.y + 5)
                     win.blit(objImg, objImg2)
                 if p2.emot == 4:
-                    objImg = pygame.image.load("Resources/emoji-png/013-tongue-small.png")
+                    objImg = pygame.image.load("Resources/emoji-png/013-tongue-chat.png")
                     objImg2 = objImg.get_rect()
                     objImg2.center = (p2.x, p2.y + 5)
                     win.blit(objImg, objImg2)
                 if p2.emot == 5:
-                    objImg = pygame.image.load("Resources/emoji-png/022-suspicious-small.png")
+                    objImg = pygame.image.load("Resources/emoji-png/022-suspicious-chat.png")
                     objImg2 = objImg.get_rect()
                     objImg2.center = (p2.x, p2.y + 5)
                     win.blit(objImg, objImg2)
