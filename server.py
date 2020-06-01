@@ -19,6 +19,8 @@ y2 = 0
 w = 0
 h = 0
 
+emot = 0
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 try:
@@ -50,6 +52,7 @@ def generateObstacle():
         h = 500 #random.randrange(100, 300)
         # print(str(x) +","+str(y) +","+str(w) +","+str(h))
         time.sleep(6)
+            
 
 def threaded_client(conn, player):
     global x
@@ -57,11 +60,13 @@ def threaded_client(conn, player):
     global y2
     global w
     global h
+    global emot
     conn.send(pickle.dumps(players[player]))
     reply = ""
     while True:
         try:
             data = pickle.loads(conn.recv(2048))
+
             players[player] = data
             if not data:
                 print("Disconnected")
