@@ -34,7 +34,7 @@ print("Waiting for a connection, Server Started")
 # p1 = pygame.image.load(os.getcwd() + '\\Resources\\img\\green.png').convert()
 # p2 = pygame.image.load(os.getcwd() + '\\Resources\\img\\blue.png').convert()
 
-players = [Player("Player 1",0,0,100,85,os.getcwd() + '\\Resources\\img\\blue.png'), Player("Player 2",100,100, 100,85, os.getcwd() + '\\Resources\\img\\green.png')]
+players = [Player("Player 1",100,100,100,85,os.getcwd() + '\\Resources\\img\\blue.png'), Player("Player 2",100,300, 100,85, os.getcwd() + '\\Resources\\img\\green.png')]
 
 def generateObstacle():
     global x
