@@ -124,6 +124,21 @@ def button(msg, x, y, wid, hei, ac, ic, action=None, pic=None, *arg):
                 server = nserver
                 n = Network(server)
                 raise Done
+            if action == "emot1":
+                p = n.getP()
+                p.emot = 1
+            if action == "emot2":
+                p = n.getP()
+                p.emot = 2
+            if action == "emot3":
+                p = n.getP()
+                p.emot = 3
+            if action == "emot4":
+                p = n.getP()
+                p.emot = 4
+            if action == "emot5":
+                p = n.getP()
+                p.emot = 5
             if action == "quit":
                 pygame.quit()
                 quit()
@@ -554,13 +569,71 @@ def game():
                 raise Done
                 # break
 
+            if p.emot != 0:
+                if p.emot == 1:
+                    objImg = pygame.image.load("Resources/emoji-png/003-happy-small.png")
+                    objImg2 = objImg.get_rect()
+                    objImg2.center = (p.x, p.y + 5)
+                    win.blit(objImg, objImg2)
+                if p.emot == 2:
+                    objImg = pygame.image.load("Resources/emoji-png/004-laughing-small.png")
+                    objImg2 = objImg.get_rect()
+                    objImg2.center = (p.x, p.y + 5)
+                    win.blit(objImg, objImg2)
+                if p.emot == 3:
+                    objImg = pygame.image.load("Resources/emoji-png/007-crying-small.png")
+                    objImg2 = objImg.get_rect()
+                    objImg2.center = (p.x, p.y + 5)
+                    win.blit(objImg, objImg2)
+                if p.emot == 4:
+                    objImg = pygame.image.load("Resources/emoji-png/013-tongue-small.png")
+                    objImg2 = objImg.get_rect()
+                    objImg2.center = (p.x, p.y + 5)
+                    win.blit(objImg, objImg2)
+                if p.emot == 5:
+                    objImg = pygame.image.load("Resources/emoji-png/022-suspicious-small.png")
+                    objImg2 = objImg.get_rect()
+                    objImg2.center = (p.x, p.y + 5)
+                    win.blit(objImg, objImg2)
+            else:
+                print(p.emot)
+
+            if p2.emot != 0:
+                if p2.emot == 1:
+                    objImg = pygame.image.load("Resources/emoji-png/003-happy-small.png")
+                    objImg2 = objImg.get_rect()
+                    objImg2.center = (p2.x, p2.y + 5)
+                    win.blit(objImg, objImg2)
+                if p2.emot == 2:
+                    objImg = pygame.image.load("Resources/emoji-png/004-laughing-small.png")
+                    objImg2 = objImg.get_rect()
+                    objImg2.center = (p2.x, p2.y + 5)
+                    win.blit(objImg, objImg2)
+                if p2.emot == 3:
+                    objImg = pygame.image.load("Resources/emoji-png/007-crying-small.png")
+                    objImg2 = objImg.get_rect()
+                    objImg2.center = (p2.x, p2.y + 5)
+                    win.blit(objImg, objImg2)
+                if p2.emot == 4:
+                    objImg = pygame.image.load("Resources/emoji-png/013-tongue-small.png")
+                    objImg2 = objImg.get_rect()
+                    objImg2.center = (p2.x, p2.y + 5)
+                    win.blit(objImg, objImg2)
+                if p2.emot == 5:
+                    objImg = pygame.image.load("Resources/emoji-png/022-suspicious-small.png")
+                    objImg2 = objImg.get_rect()
+                    objImg2.center = (p2.x, p2.y + 5)
+                    win.blit(objImg, objImg2)
+            else:
+                print(p2.emot)
+
             # Chat
             pygame.draw.rect(win, white,((width-110),((height // 2)-160),70,370))
-            button("", (width-100), (height // 2)+150, 50, 50, bright_red, red, None, "Resources/emoji-png/003-happy-small.png")
-            button("", (width-100), (height // 2)+75, 50, 50, bright_red, red, None, "Resources/emoji-png/004-laughing-small.png")
-            button("", (width-100), (height // 2), 50, 50, bright_red, red, None, "Resources/emoji-png/007-crying-small.png")
-            button("", (width-100), (height // 2)-75, 50, 50, bright_red, red, None, "Resources/emoji-png/013-tongue-small.png")
-            button("", (width-100), (height // 2)-150, 50, 50, bright_red, red, None, "Resources/emoji-png/022-suspicious-small.png")
+            button("", (width-100), (height // 2)+150, 50, 50, bright_red, red, "emot1", "Resources/emoji-png/003-happy-small.png")
+            button("", (width-100), (height // 2)+75, 50, 50, bright_red, red, "emot2", "Resources/emoji-png/004-laughing-small.png")
+            button("", (width-100), (height // 2), 50, 50, bright_red, red, "emot3", "Resources/emoji-png/007-crying-small.png")
+            button("", (width-100), (height // 2)-75, 50, 50, bright_red, red, "emot4", "Resources/emoji-png/013-tongue-small.png")
+            button("", (width-100), (height // 2)-150, 50, 50, bright_red, red, "emot5", "Resources/emoji-png/022-suspicious-small.png")
             pygame.display.update()
         except Done:
             break
