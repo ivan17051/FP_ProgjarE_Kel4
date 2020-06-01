@@ -13,6 +13,7 @@ class Player():
         self.ready = False
         self.obsRect = (-200,0,0,0,0)
         self.dead = False
+        self.emot = 0
 
     def draw(self, win):
         win.blit(self.image, self.rect)
