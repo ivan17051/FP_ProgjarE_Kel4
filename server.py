@@ -6,7 +6,7 @@ import os
 import random
 import time
 
-# server = "192.168.100.2"
+# server = "192.168.100.200"
 server = socket.gethostbyname(socket.gethostname())
 print("Server: " + server)
 port = 5555
